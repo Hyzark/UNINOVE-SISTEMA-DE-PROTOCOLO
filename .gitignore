@@ -1,0 +1,18 @@
+# Ambientes virtuais
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Outros caches do Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
