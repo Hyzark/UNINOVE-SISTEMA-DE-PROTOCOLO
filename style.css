@@ -1,0 +1,159 @@
+*{
+margin: 0;
+padding: 0;
+box-sizing:border-box;
+}
+
+.container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #74bacca9;
+
+}
+
+.content {
+
+background-color: #fff;
+border-radius: 15px;
+width: 960px;
+height: 50%;
+display: flex; /*Organizando a borda*/
+justify-content: space-between;/*Centralizando a borda*/
+align-items: center;/*Centralizando os elementos*/   
+position: relative; 
+}
+.content:before{ /*Mantém a cor no primeiro e segundo conteúdo*/
+    content: "";
+    position:absolute;
+    background-color:rgb(125, 184, 252);
+    width:40%;
+    height:100%;
+    border-top-left-radius: 15px; /*Aqui estou alterando a borda a cima */
+    border-bottom-left-radius:15px; 
+
+    left: 0px;
+   
+
+}
+.title{ /*Colocando o titulo bem vindo em branco*/
+    color: #f3f3f3;
+    font-size: 28px;
+    text-transform:capitalize;
+    font-weight: bold;
+}
+
+
+.title-second{
+    color: #000000;
+    font-size: 28px;
+    text-align: center;
+}
+.first-content{
+display:flex;
+display:none;
+}
+.first-column{
+    text-align:center;
+    width:40%;
+    padding: 0 30px;
+    z-index:10;
+}
+.second-column{
+    width:60%;
+    flex: 1 auto; 
+    display:flex;
+    flex-direction:column;
+    align-items:center; /*Aqui estou alinhando meu formulário*/
+}
+.form input{
+  height:45px;
+    width: 100%;
+  border:none;
+  background-color: #ecf0f1;
+}
+
+.label-input{
+    background-color:#ecf0f1;
+    display:flex;
+    align-items:center;
+    margin:8px;
+}
+.icon-modify{ /*Aqui estou configurando meu icone*/
+    color:#7f8c8d;
+    padding: 0 5px;
+}
+
+.form{
+display:flex;
+flex-direction:column;
+width:55%;
+text-align:center;
+}
+
+
+
+.description{
+    font-size : 14px;
+    font-weight: 300;
+    color:#081f86;
+    Line-height: 1.5;
+}
+.title-second{
+    color:rgb(44, 99, 99);
+}
+.btn{
+    border-radius:15px;
+    text-transform:uppercase;
+    color:#880000;
+    font-size: 10px;
+    padding:10px;
+    width: 150px;
+    align-self:center;
+    border-width: 0;
+    margin-top: 5px; /*Aqui é o meu distanciamento do botão em relação ao entrar*/
+  
+
+}
+.btn-primary{ 
+    background-color:transparent;
+    border: 1px solid #fff;
+    cursor : pointer;
+    transition:background-color .5s; /*Estou configurando a transição*/
+}
+/*qndo passar o meu cursos o meu botão irá fica branco*/
+.btn-primary:hover{
+    background-color:#fff;
+    color:#000;
+    margin-top: 5px;
+
+}
+.btn-second{
+    background-color:v#58af9b;
+    border:1px solid #58af9b;
+    transition:background-color .5s;
+}
+.btn-second:hover{
+    background-color:#fff;
+    border:1px solid #58af9b;
+}
+.first-content.second-column{
+    z-index:11; /**Aqui estou configurando a ordem do conteúdo, para que o conteúdo de cadastro fique na frente do conteúdo de login*/
+}
+.second-content.first-column{
+    order:2;
+    opacity:0; /*Aqui estou configurando a opacidade do conteúdo de login*/
+}
+
+/*Segundo conteúdo*/
+.second-content{
+position : absolute;
+display:flex
+}
+.second.content.first.column{
+    order:2;
+}
+.second-content.second-column{
+    order:1;
+}
