@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!--Aqui estou chamando a biblioteca do font awesome para poder usar os ícones-->
+</head>
+<body>
+    <div class="container">
+        <div class="content first-content"><!-- primeiro conteúdo-->
+            <div class="first-column">
+
+                <!-- Aqui será o minha tela de Login-->
+
+                <h2 class="title title-welcome">Bem-Vindo!</h2>
+                <p class="description description-primary">Centralize a gestão de documentos da sua organização e acompanhe cada etapa dos seus processos em tempo real.</p>
+
+                <p class="description">Faça login e acompanhe os seus processos</p>
+                <button id="signup" class="btn btn-primary">Cadastrar</button>
+            </div>
+
+            <!--AQUI É MINHA SEGUNDA COLUNA-->
+
+            <div class="second-column">
+                <form class="form">
+                    <h2 class="title title-second">Faça seu login</h2>
+
+                    <label class="label-input"> <!--Esses labels são os meus campos de login, onde o usuário irá digitar as informações, e colocando os icones-->
+                        <i class="fa-solid fa-user icon-modify"></i>
+                        <input type="text" placeholder="Digite o nome completo" required>
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" placeholder="Digite seu e-mail">
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" placeholder="Digite o seu ID" required >
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Senha">
+                    </label>
+
+                    <!-- id removido daqui -->
+                    <button type="button" class="btn btn-second">Entrar</button>
+                </form>
+            </div>
+        </div>
+
+        <!--SECOND CONTENT-->
+
+        <div class="content second-content"> <!-- Segunda coluna: tela de cadastro -->
+
+            <div class="first-column">
+                <h2 class="title title-primary">Bem-Vindo !</h2>
+                <p class="description">Cadastre-se e comece a gerenciar seus processos</p>
+                <!-- id="signin" agora está aqui -->
+
+                <button id="signin" class="btn btn-primary">Entrar</button>
+            </div>
+
+            <div class="second-column">
+                <form class="form" id="form-cadastro">
+                    <h2 class="title title-second">Faça seu cadastro</h2>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="Digite o seu nome completo">
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" placeholder="Digite o seu ID">
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-building"></i>
+                        <input type="text" placeholder="Digite o seu setor">
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" placeholder="Digite seu e-mail">
+                    </label>
+
+                    <label class="label-input">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Senha">
+                    </label>
+
+                    <button type="submit" class="btn btn-second">Cadastrar</button>
+
+                
+                </form>
+                <p id="mensagem"></p> <!--Aqui estou criando um parágrafo com o id mensagem, para quando o usuário clicar no botão de cadastrar ele exiba uma mensagem de sucesso.-->
+            </div>
+
+        </div>
+
+    </div>
+<script>
+    var btnSignin = document.querySelector("#signin");
+    var btnSignup = document.querySelector("#signup");
+    var body = document.querySelector("body");
+
+    btnSignin.addEventListener("click", function(){
+        body.className = "sign-in-js";
+    });
+
+    btnSignup.addEventListener("click", function(){
+        body.className = "sign-up-js";
+    });
+
+
+   var formCadastro = document.getElementById("form-cadastro");
+   var mensagem = document.getElementById("mensagem");
+
+    formCadastro.addEventListener("submit",function(event){
+            event.preventDefault();
+
+            var campos=formCadastro.querySelectorAll("input"); //Análisa se os campos estão todos digitados
+            var tudoPreenchido=true;
+            for(var i=0;i<campos.length;i++){ //Aqui estamos inserindo um laço de repetição para verificar se os campos estão digitados.
+                if(campos[i].value.trim()===""){ //Verifica se meu usuário digitou algo
+                    tudoPreenchido=false;
+                }
+            }
+            if(tudoPreenchido){
+                
+                
+                
+               // Se ele digitou todos os campos será verde, se não mostrará a mensagem vermelha
+                mensagem.textContent="Usuário Cadastrado";
+                mensagem.style.color="green";
+            }else{
+                mensagem.textContent="Preencha todos os campos";
+                mensagem.style.color="red";
+            }
+
+    });
+
+
+
+    
+</script>
+</body>
+</html>

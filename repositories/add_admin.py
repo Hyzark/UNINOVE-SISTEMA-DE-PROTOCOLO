@@ -8,7 +8,7 @@ class Setoradmin(BaseModel):
     nome: str
     descricao: str
 
-def create_cadastro_setor(cadastro):
+def create_cadastro_setor_admin(cadastro):
     conn = create_connection()
     cursor = conn.cursor()
 

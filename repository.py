@@ -13,7 +13,7 @@ cursor = connection.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS setores (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome        TEXT    NOT NULL,
+        nome        TEXT    NOT NULL UNIQUE,
         descricao   TEXT,
         ativo       INTEGER NOT NULL DEFAULT 1
     )
@@ -104,12 +104,10 @@ cursor.execute("""
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS historico (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
-        processo_id INTEGER NOT NULL,
         usuario_id  INTEGER NOT NULL,
         acao        TEXT    NOT NULL,
         descricao   TEXT,
         criado_em   TEXT    NOT NULL DEFAULT (datetime('now')),
-        FOREIGN KEY (processo_id) REFERENCES processos(id),
         FOREIGN KEY (usuario_id)  REFERENCES usuarios(id)
     )
 """)

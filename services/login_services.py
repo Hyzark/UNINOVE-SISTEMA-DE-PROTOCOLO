@@ -18,3 +18,4 @@ def auth_password(email, password):
         raise CredenciaisInvalidasException("Email ou senha inválidos.")
 
     return result[0], result[2]
+
