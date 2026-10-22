@@ -1,3 +1,5 @@
+
+
 *{
 margin: 0;
 padding: 0;
@@ -34,6 +36,7 @@ position: relative;
     border-bottom-left-radius:15px; 
 
     left: 0px;
+    transition: all 1.3s; /*Aqui estou configurando a transição do meu conteúdo*/
    
 
 }
@@ -138,22 +141,122 @@ text-align:center;
     background-color:#fff;
     border:1px solid #58af9b;
 }
-.first-content.second-column{
-    z-index:11; /**Aqui estou configurando a ordem do conteúdo, para que o conteúdo de cadastro fique na frente do conteúdo de login*/
+.first-content{
+    display:flex;
 }
-.second-content.first-column{
-    order:2;
-    opacity:0; /*Aqui estou configurando a opacidade do conteúdo de login*/
+.first-content .second-column{
+    z-index:11; /*formulário de login na frente*/
 }
 
-/*Segundo conteúdo*/
+/*Segundo conteúdo (cadastro): começa escondido*/
 .second-content{
-position : absolute;
-display:flex
+    position:absolute;
+    display:flex;
 }
-.second.content.first.column{
+.second-content .first-column{
     order:2;
+    z-index:-1;
+    opacity:0;
 }
-.second-content.second-column{
+.second-content .second-column{
     order:1;
+    z-index:-1;
 }
+
+/* Cadastrar: a faixa vai para a direita e revela o formulário de cadastro */
+.sign-up-js .content::before{
+    left:60%;
+    border-radius:0 15px 15px 0;
+    z-index:12;               /* faixa por cima do formulário */
+}
+.sign-up-js .first-content .first-column,
+.sign-up-js .first-content .second-column{
+    z-index:-1;
+}
+.sign-up-js .second-content .second-column{
+    z-index:11;               /* formulário por baixo da faixa */
+}
+.sign-up-js .second-content .first-column{
+    z-index:13;               /* texto por cima da faixa */
+    opacity:1;
+    animation: aparecer .5s .8s backwards;
+}
+
+/* Entrar: a faixa volta para a esquerda e revela o login */
+.sign-in-js .content::before{
+    z-index:12;
+}
+.sign-in-js .first-content .second-column{
+    z-index:11;
+}
+.sign-in-js .first-content .first-column{
+    z-index:13;
+    animation: aparecer .5s .8s backwards; /*Aqui o meu tempo está configurado*/
+}
+/*Animação do CSS*/
+
+    to{ 
+       left:60%;
+       width:40%;
+     }
+    
+
+    @keyframes aparecer{
+    from{ 
+        left:0;
+        width:40%;
+    }
+        25%{
+            left:25%;
+            width:50%;
+
+        }
+        50%{
+            left:20%;
+            width:60;
+
+        }
+
+        75%{
+            left:45%;
+            width:50%;
+
+        }
+    
+
+    to{ 
+       left:60%;
+       width:40%;
+     }
+    } 
+
+    @keyframes desaparecer{
+    from{ 
+        left:60;
+        width:40%;
+    }
+        25%{
+            left:45%;
+            width:50%;
+
+        }
+        50%{
+            left:25%;
+            width:60;
+
+        }
+
+        75%{
+            left:5%;
+            width:50%;
+
+        }
+    
+    }
+    #mensagem{
+        color:red;
+        font-weight:bold;
+        text-align:center;
+        margin-top:10px;
+
+    } /*Aqui é para minha mensagem de boas vindas*/
