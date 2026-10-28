@@ -6,7 +6,7 @@ from services.login_services import (
     CredenciaisInvalidasException
 )
 from repositories.login_repository import get_painel_usuario
-from config import TIPO_ADMIN
+from config import TIPO_ADMIN, TIPO_GERENTE
 
 router = APIRouter()
 
@@ -21,8 +21,9 @@ def consultar_sessao(request: Request):
         raise HTTPException(status_code=401, detail="Usuário não encontrado.")
     usuario, mesas = dados
     admin = usuario[3] == TIPO_ADMIN
+    perfil = "admin" if admin else "gerente" if usuario[3] == TIPO_GERENTE else "funcionario"
     return {"id": usuario[0], "nome": usuario[1], "email": usuario[2],
-            "perfil": "admin" if admin else "funcionario",
+            "perfil": perfil, "nivel_acesso": usuario[3], "setor_id": usuario[4],
             "setor": usuario[5], "mesas": mesas}
 
 @router.post("/logout")

@@ -7,6 +7,7 @@ from routes.cadastro_usuario import router as cadastro_router
 from routes.login import router as login_router
 from routes.cadastro_mesa import router as cadastro_mesa_router
 from routes.cadastro_setor import router as cadastro_setor_router
+from routes.processos import router as processos_router
 app = FastAPI()
 BASE_DIR = Path(__file__).resolve().parent
 app.mount("/style", StaticFiles(directory=BASE_DIR / "style"), name="style")
@@ -28,6 +29,8 @@ app.include_router(login_router)
 app.include_router(cadastro_mesa_router)
 
 app.include_router(cadastro_setor_router)
+
+app.include_router(processos_router)
 
 
 

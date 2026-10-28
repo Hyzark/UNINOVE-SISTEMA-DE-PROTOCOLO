@@ -6,8 +6,8 @@ def create_cadastro_func(cadastro, hashed_password):
     cursor = conn.cursor()
 
     try: 
-        cursor.execute("INSERT INTO usuarios (nome, email, senha, cargo, nivel_acesso, setor_id, ativo) VALUES (?, ?, ?, ?, 1, ?, 1)",
-                       (cadastro.nome, cadastro.email, hashed_password, cadastro.cargo, cadastro.setor_id))
+        cursor.execute("INSERT INTO usuarios (nome, email, senha, cargo, nivel_acesso, setor_id, ativo) VALUES (?, ?, ?, ?, ?, ?, 1)",
+                       (cadastro.nome, cadastro.email, hashed_password, cadastro.cargo, cadastro.nivel_acesso, cadastro.setor_id))
         conn.commit()
     except sqlite3.IntegrityError:
         conn.rollback()

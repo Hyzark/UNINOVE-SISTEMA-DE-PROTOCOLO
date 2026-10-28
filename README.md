@@ -1,5 +1,78 @@
 # Como executar o projeto
 
+## Sistema de Protocolo
+
+Aplicação web acadêmica para cadastro e acompanhamento de processos, construída com FastAPI e SQLite.
+
+## Funcionalidades implementadas
+
+### Acesso e usuários
+
+- Login com e-mail e senha, sessão autenticada e logout.
+- Níveis de acesso: funcionário (`1`), administrador (`2`) e gerente (`3`).
+- O administrador pode cadastrar funcionários ou gerentes, vinculando-os a um setor.
+- E-mails cadastrados para funcionários e gerentes devem usar `@empresa.sp.gov.br`.
+- O painel administrativo permite cadastrar setores.
+
+### Setores, mesas e processos
+
+- Funcionários e gerentes veem as mesas ativas do próprio setor.
+- Ao entrar em uma mesa, podem criar processos com assunto e descrição.
+- O número do processo é gerado pelo sistema no formato `PROC-000001`.
+- A lista da mesa exibe seus processos; ao abrir um processo, a tela mostra dados, situação, setor, mesa, autor e datas.
+- O acesso a mesas e processos é validado no servidor por setor.
+
+### Arquivos e documentos
+
+- É possível anexar arquivos a um processo. O limite atual é 20 MB por arquivo.
+- O anexo pode ser baixado por usuários autorizados do setor do processo.
+- A tela de processo mantém uma lista de arquivos, incluindo PDFs gerados pelo editor.
+- O editor de documentos permite texto formatado, títulos, listas e imagens PNG, JPG/JPEG, GIF e WebP.
+- Imagens de até 20 MB são redimensionadas no navegador antes de serem inseridas.
+- O conteúdo editável é salvo para reabertura. Cada salvamento gera ou substitui o PDF associado ao documento.
+
+### Histórico
+
+- O processo exibe eventos de criação, anexação de arquivos, criação e atualização de documentos editáveis e tramitações que estejam registradas no banco.
+- Os eventos mostram usuário, data e hora; a interface formata as datas para o fuso de São Paulo.
+
+## Endpoints principais
+
+| Endpoint | Uso |
+| --- | --- |
+| `POST /login`, `GET /sessao`, `POST /logout` | Autenticação e sessão |
+| `POST /cadastrarfuncionario` | Cadastro administrativo de funcionário ou gerente |
+| `GET /setores`, `POST /cadastrarsetor` | Listar e cadastrar setores |
+| `POST /cadastrarMesa` | Cadastrar uma mesa para o setor do funcionário autenticado |
+| `GET /minhas-mesas`, `POST /mesa-atual` | Listar e selecionar mesa |
+| `GET /mesas/{mesa_id}/processos`, `POST /processos` | Listar processos da mesa e criar processo |
+| `GET /processos/{processo_id}` | Consultar detalhes, anexos e histórico |
+| `POST /processos/{processo_id}/documentos` | Anexar arquivo |
+| `GET /documentos/{documento_id}/download` | Baixar arquivo autorizado |
+| `POST /processos/{processo_id}/documentos-editoriais` | Criar documento editável e PDF |
+| `GET /documentos-editoriais/{documento_id}`, `PUT /documentos-editoriais/{documento_id}` | Reabrir e atualizar documento editável |
+
+## Ainda não implementado
+
+As tabelas de algumas destas funcionalidades já aparecem no esquema do banco, mas ainda não há fluxo completo de tela, rota e serviço para elas:
+
+- Tramitar processo entre mesas e setores.
+- Buscar processos por número, assunto, setor, responsável, situação ou datas.
+- Alterar a situação do processo pela interface.
+- Criar comentários e anotações públicas ou privadas.
+- Criar e aplicar marcadores.
+- Sobrestamento, controle de disponibilidade por setor, processos relacionados e solicitações de alteração ou exclusão.
+- Assinaturas e workflows de aprovação.
+- PDF consolidado com todo o processo e seus eventos.
+- Recursos de inteligência artificial descritos na documentação funcional.
+
+## Dados e arquivos
+
+- O banco utilizado pela aplicação é `banco.db`, relativo ao diretório de execução.
+- `repository.py` contém a criação das tabelas principais. Em uma base nova, execute `python repository.py` uma vez antes de iniciar a aplicação.
+- Anexos e PDFs são armazenados localmente em `uploads/documentos/` e `uploads/documentos_editoriais/`.
+- Para o primeiro acesso administrativo, a base precisa ter um usuário nível `2` e um setor ativo. O sistema ainda não tem uma tela pública para criar o primeiro administrador.
+
 ### 1. Criar a VENV
 ```bash
 python -m venv venv

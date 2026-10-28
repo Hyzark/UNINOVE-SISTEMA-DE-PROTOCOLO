@@ -15,6 +15,14 @@ class Funcionario(BaseModel):
     senha: str = Field(min_length=1)
     cargo: str = Field(min_length=1)
     setor_id: int = Field(gt=0)
+    nivel_acesso: int = Field(ge=1, le=3)
+
+    @field_validator("nivel_acesso")
+    @classmethod
+    def validar_nivel_acesso(cls, value):
+        if value not in (1, 3):
+            raise ValueError("Selecione o nível de acesso 1 ou 3.")
+        return value
 
     @field_validator("email")
     @classmethod
