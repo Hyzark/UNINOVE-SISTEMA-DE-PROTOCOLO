@@ -11,13 +11,13 @@ display: flex;
 justify-content: center;
 align-items: center;
 height: 100vh;
-background-color: #74bacca9;
+background-color:#1e2d4d ;
 
 }
 
 .content {
 
-background-color: #fff;
+background-color: #f3f6fb;
 border-radius: 15px;
 width: 960px;
 height: 50%;
@@ -29,7 +29,7 @@ position: relative;
 .content:before{ /*Mantém a cor no primeiro e segundo conteúdo*/
     content: "";
     position:absolute;
-    background-color:rgb(125, 184, 252);
+    background-color:#8ea0bd;;
     width:40%;
     height:100%;
     border-top-left-radius: 15px; /*Aqui estou alterando a borda a cima */
@@ -40,9 +40,11 @@ position: relative;
    
 
 }
-.title{ /*Colocando o titulo bem vindo em branco*/
+.title{ /*Acesse sua área de trabalho*/
     color: #f3f3f3;
-    font-size: 28px;
+    margin-bottom:17px;
+    font-size: 30px;
+   margin-bottom:px; /*Distanciamento da letra*/
     text-transform:capitalize;
     font-weight: bold;
 }
@@ -50,7 +52,7 @@ position: relative;
 
 .title-second{
     color: #000000;
-    font-size: 28px;
+    font-size: 40px;
     text-align: center;
 }
 .first-content{
@@ -85,31 +87,33 @@ display:none;
 }
 .icon-modify{ /*Aqui estou configurando meu icone*/
     color:#7f8c8d;
-    padding: 0 5px;
+    padding: 10px;
 }
 
 .form{
 display:flex;
 flex-direction:column;
-width:55%;
+width:59%;
 text-align:center;
 }
 
 
 
 .description{
-    font-size : 14px;
+    font-size : 17px; /*Aqui é meu texto de descrição*/
     font-weight: 300;
-    color:#081f86;
+    color:#f4f5f7;
     Line-height: 1.5;
 }
-.title-second{
-    color:rgb(44, 99, 99);
+.title-second{ /*Faça seu cadastro*/
+    color:#2d4b7d;
+    
+
 }
 .btn{
     border-radius:15px;
     text-transform:uppercase;
-    color:#880000;
+    color:#000000;
     font-size: 10px;
     padding:10px;
     width: 150px;
@@ -121,7 +125,7 @@ text-align:center;
 }
 .btn-primary{ 
     background-color:transparent;
-    border: 1px solid #fff;
+    border: 1px solid #474545;
     cursor : pointer;
     transition:background-color .5s; /*Estou configurando a transição*/
 }
@@ -133,19 +137,27 @@ text-align:center;
 
 }
 .btn-second{
-    background-color:v#58af9b;
-    border:1px solid #58af9b;
+    background-color : #f3f1f1;
+    border:1px solid #000000;
     transition:background-color .5s;
 }
-.btn-second:hover{
+.btn-second:hover{ /*Aqui é a cor da linha do fundo de cadastro*/
     background-color:#fff;
-    border:1px solid #58af9b;
+    border:1px solid #2d2e2e;
 }
 .first-content{
     display:flex;
 }
 .first-content .second-column{
     z-index:11; /*formulário de login na frente*/
+}
+.toggle-senha{
+    padding:0 12px;
+    cursor:pointer;
+    
+}
+.toggle-senha:hover{
+    color:#000
 }
 
 /*Segundo conteúdo (cadastro): começa escondido*/
@@ -193,7 +205,7 @@ text-align:center;
     z-index:13;
     animation: aparecer .5s .8s backwards; /*Aqui o meu tempo está configurado*/
 }
-/*Animação do CSS*/
+/*Animação do CSS para a barra ela deslizar*/
 
     to{ 
        left:60%;
@@ -201,7 +213,7 @@ text-align:center;
      }
     
 
-    @keyframes aparecer{
+    @keyframes aparecer{ 
     from{ 
         left:0;
         width:40%;
@@ -254,7 +266,7 @@ text-align:center;
     
     }
     #mensagem{
-        color:red;
+        color:rgb(53, 6, 6);
         font-weight:bold;
         text-align:center;
         margin-top:10px;

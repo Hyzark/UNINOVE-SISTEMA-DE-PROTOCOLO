@@ -25,6 +25,7 @@ formCadastro.addEventListener("submit",function(event){
         if(campos[i].value.trim()===""){
             tudoPreenchido=false;
         }
+        
     }
     if(tudoPreenchido){ //Aqui ele vai mostrar a minha mensagem, dependendo da ação do meu usuário
         mensagem.textContent="Usuário cadastrado";
@@ -33,4 +34,7 @@ formCadastro.addEventListener("submit",function(event){
         mensagem.textContent="Preencha todos os campos";
         mensagem.style.color="red";
     }
-});
+
+    });
+
+
