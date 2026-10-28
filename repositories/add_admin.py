@@ -56,7 +56,7 @@ def create_cadastro_admin(cadastro, hashed_password):
 
 cadastro = Admin(
     nome="Marcus Vinicius",
-    email="marcusadm@admin.com",
+    email="marcusadm@admin.sp.gov.br",
     senha="12345",
     cargo="Diretor"
 )

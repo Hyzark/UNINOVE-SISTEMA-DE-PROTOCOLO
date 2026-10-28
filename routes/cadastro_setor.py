@@ -1,9 +1,13 @@
 from fastapi import HTTPException, APIRouter, Depends
 from pydantic import BaseModel
-from repositories.setores_repository import create_cadastro_setor
+from repositories.setores_repository import create_cadastro_setor, listar_setores_ativos
 from services.security.auth_services import require_admin
 
 router = APIRouter()
+
+@router.get("/setores")
+def listar_setores():
+    return [{"id": setor[0], "nome": setor[1]} for setor in listar_setores_ativos()]
 
 class Setor(BaseModel):
     nome: str

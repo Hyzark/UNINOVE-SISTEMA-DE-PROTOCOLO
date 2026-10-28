@@ -1,154 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!--Aqui estou chamando a biblioteca do font awesome para poder usar os ícones-->
-</head>
-<body>
-    <div class="container">
-        <div class="content first-content"><!-- primeiro conteúdo-->
-            <div class="first-column">
-
-                <!-- Aqui será o minha tela de Login-->
-
-                <h2 class="title title-welcome">Bem-Vindo!</h2>
-                <p class="description description-primary">Centralize a gestão de documentos da sua organização e acompanhe cada etapa dos seus processos em tempo real.</p>
-
-                <p class="description">Faça login e acompanhe os seus processos</p>
-                <button id="signup" class="btn btn-primary">Cadastrar</button>
-            </div>
-
-            <!--AQUI É MINHA SEGUNDA COLUNA-->
-
-            <div class="second-column">
-                <form class="form">
-                    <h2 class="title title-second">Faça seu login</h2>
-
-                    <label class="label-input"> <!--Esses labels são os meus campos de login, onde o usuário irá digitar as informações, e colocando os icones-->
-                        <i class="fa-solid fa-user icon-modify"></i>
-                        <input type="text" placeholder="Digite o nome completo" required>
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Digite seu e-mail">
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-id-card"></i>
-                        <input type="text" placeholder="Digite o seu ID" required >
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Senha">
-                    </label>
-
-                    <!-- id removido daqui -->
-                    <button type="button" class="btn btn-second">Entrar</button>
-                </form>
-            </div>
-        </div>
-
-        <!--SECOND CONTENT-->
-
-        <div class="content second-content"> <!-- Segunda coluna: tela de cadastro -->
-
-            <div class="first-column">
-                <h2 class="title title-primary">Bem-Vindo !</h2>
-                <p class="description">Cadastre-se e comece a gerenciar seus processos</p>
-                <!-- id="signin" agora está aqui -->
-
-                <button id="signin" class="btn btn-primary">Entrar</button>
-            </div>
-
-            <div class="second-column">
-                <form class="form" id="form-cadastro">
-                    <h2 class="title title-second">Faça seu cadastro</h2>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="Digite o seu nome completo">
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-id-card"></i>
-                        <input type="text" placeholder="Digite o seu ID">
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-building"></i>
-                        <input type="text" placeholder="Digite o seu setor">
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Digite seu e-mail">
-                    </label>
-
-                    <label class="label-input">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Senha">
-                    </label>
-
-                    <button type="submit" class="btn btn-second">Cadastrar</button>
-
-                
-                </form>
-                <p id="mensagem"></p> <!--Aqui estou criando um parágrafo com o id mensagem, para quando o usuário clicar no botão de cadastrar ele exiba uma mensagem de sucesso.-->
-            </div>
-
-        </div>
-
-    </div>
+<html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sistema de Protocolo</title><link rel="stylesheet" href="/style/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></head>
+<body><main class="container">
+<section id="login-view" class="content"><h1>Sistema de Protocolo</h1><p id="mensagem-login" class="message" role="status"></p><form id="form-login" class="form"><h2>Entrar</h2><label class="label-input"><i class="fa-solid fa-envelope"></i><input name="email" type="email" placeholder="E-mail corporativo" required></label><label class="label-input"><i class="fa-solid fa-lock"></i><input name="senha" type="password" placeholder="Senha" required><button class="toggle-password" type="button" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button></label><button class="btn" type="submit">Entrar</button></form></section>
+<section id="dashboard" class="content hidden"><header class="topbar"><div><h1 id="boas-vindas">Olá</h1><p id="perfil-label"></p></div><button id="btn-logout" class="btn btn-light" type="button">Sair</button></header><p id="mensagem" class="message" role="status"></p>
+<section id="painel-funcionario" class="card hidden"><h2>Meu setor</h2><p id="setor-funcionario"></p><h3>Mesas disponíveis</h3><ul id="lista-mesas"></ul></section>
+<section id="painel-admin" class="admin-grid hidden"><form id="form-funcionario" class="form card"><h2>Criar funcionário</h2><p class="help">O funcionário terá acesso ao setor selecionado e às mesas vinculadas a ele.</p><label class="label-input"><i class="fa-solid fa-user"></i><input name="nome" placeholder="Nome completo" required></label><label class="label-input"><i class="fa-solid fa-briefcase"></i><input name="cargo" placeholder="Cargo" required></label><label class="label-input"><i class="fa-solid fa-envelope"></i><input name="email" type="email" placeholder="nome@empresa.sp.gov.br" pattern="[^@\s]+@empresa\.sp\.gov\.br$" title="Use @empresa.sp.gov.br" required></label><label class="label-input"><i class="fa-solid fa-building"></i><select name="setor_id" required><option value="">Selecione o setor</option></select></label><label class="label-input"><i class="fa-solid fa-lock"></i><input name="senha" type="password" placeholder="Senha" required><button class="toggle-password" type="button" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button></label><button class="btn" type="submit">Criar funcionário</button></form>
+<form id="form-setor" class="form card"><h2>Criar setor</h2><label class="label-input"><i class="fa-solid fa-building"></i><input name="nome" placeholder="Nome do setor" required></label><label class="label-input"><i class="fa-solid fa-align-left"></i><input name="descricao" placeholder="Descrição (opcional)"></label><button class="btn" type="submit">Criar setor</button></form></section></section></main>
 <script>
-    var btnSignin = document.querySelector("#signin");
-    var btnSignup = document.querySelector("#signup");
-    var body = document.querySelector("body");
-
-    btnSignin.addEventListener("click", function(){
-        body.className = "sign-in-js";
-    });
-
-    btnSignup.addEventListener("click", function(){
-        body.className = "sign-up-js";
-    });
-
-
-   var formCadastro = document.getElementById("form-cadastro");
-   var mensagem = document.getElementById("mensagem");
-
-    formCadastro.addEventListener("submit",function(event){
-            event.preventDefault();
-
-            var campos=formCadastro.querySelectorAll("input"); //Análisa se os campos estão todos digitados
-            var tudoPreenchido=true;
-            for(var i=0;i<campos.length;i++){ //Aqui estamos inserindo um laço de repetição para verificar se os campos estão digitados.
-                if(campos[i].value.trim()===""){ //Verifica se meu usuário digitou algo
-                    tudoPreenchido=false;
-                }
-            }
-            if(tudoPreenchido){
-                
-                
-                
-               // Se ele digitou todos os campos será verde, se não mostrará a mensagem vermelha
-                mensagem.textContent="Usuário Cadastrado";
-                mensagem.style.color="green";
-            }else{
-                mensagem.textContent="Preencha todos os campos";
-                mensagem.style.color="red";
-            }
-
-    });
-
-
-
-    
-</script>
-</body>
-</html>
+const byId=id=>document.getElementById(id);const msg=byId('mensagem');function avisar(texto,ok=false){msg.textContent=texto;msg.className='message '+(ok?'success':'error');}function detalhe(d){return typeof d.detail==='string'?d.detail:'Confira os campos e sua permissão.';}
+document.querySelectorAll('.toggle-password').forEach(b=>b.addEventListener('click',()=>{const i=b.parentElement.querySelector('input'),show=i.type==='password';i.type=show?'text':'password';b.setAttribute('aria-label',show?'Ocultar senha':'Mostrar senha');b.innerHTML=show?'<i class="fa-regular fa-eye-slash"></i>':'<i class="fa-regular fa-eye"></i>';}));
+async function carregarSetores(){const r=await fetch('/setores');if(!r.ok)throw Error('Não foi possível carregar os setores.');const setores=await r.json(),s=document.querySelector('[name="setor_id"]');s.innerHTML='<option value="">Selecione o setor</option>';setores.forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.nome;s.append(o);});}
+function mostrarPainel(u){byId('login-view').classList.add('hidden');byId('dashboard').classList.remove('hidden');byId('boas-vindas').textContent='Olá, '+u.nome;byId('perfil-label').textContent=u.perfil==='admin'?'Administrador':'Funcionário';if(u.perfil==='admin'){byId('painel-admin').classList.remove('hidden');byId('painel-funcionario').classList.add('hidden');carregarSetores().catch(e=>avisar(e.message));}else{byId('painel-funcionario').classList.remove('hidden');byId('painel-admin').classList.add('hidden');byId('setor-funcionario').textContent=u.setor||'Setor não informado';const ul=byId('lista-mesas');ul.replaceChildren();(u.mesas||[]).forEach(nome=>{const li=document.createElement('li');li.textContent=nome;ul.append(li);});if(!(u.mesas||[]).length){const li=document.createElement('li');li.textContent='Nenhuma mesa cadastrada para este setor.';ul.append(li);}}}
+async function obterSessao(){const r=await fetch('/sessao');if(r.ok)mostrarPainel(await r.json());}
+byId('form-login').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget;try{const r=await fetch('/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:f.email.value.trim(),senha:f.senha.value})});const d=await r.json();if(!r.ok)throw Error(d.detail||'Falha ao entrar.');await obterSessao();}catch(err){const el=byId('mensagem-login');el.textContent=err.message;el.className='message error';}});
+byId('btn-logout').addEventListener('click',async()=>{await fetch('/logout',{method:'POST'});byId('dashboard').classList.add('hidden');byId('login-view').classList.remove('hidden');byId('form-login').reset();msg.textContent='Você saiu do sistema.';});
+byId('form-funcionario').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget,d={nome:f.nome.value.trim(),email:f.email.value.trim(),senha:f.senha.value,cargo:f.cargo.value.trim(),setor_id:Number(f.setor_id.value)};if(!d.nome||!d.email||!d.senha||!d.cargo||!d.setor_id){avisar('Preencha todos os campos obrigatórios.');return;}try{const r=await fetch('/cadastrarfuncionario',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}),j=await r.json();if(!r.ok)throw Error(detalhe(j));avisar(j.mensagem,true);f.reset();}catch(x){avisar(x.message);}});
+byId('form-setor').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget;try{const r=await fetch('/cadastrarsetor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:f.nome.value.trim(),descricao:f.descricao.value.trim()})}),j=await r.json();if(!r.ok)throw Error(detalhe(j));avisar(j.mensagem,true);f.reset();await carregarSetores();}catch(x){avisar(x.message);}});
+obterSessao().catch(()=>{});
+</script></body></html>
