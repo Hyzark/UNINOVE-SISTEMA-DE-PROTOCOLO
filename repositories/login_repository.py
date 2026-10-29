@@ -37,7 +37,7 @@ def get_painel_usuario(user_id):
         if usuario is None:
             return None
         mesas = []
-        if usuario[3] in (1, 3) and usuario[4] is not None:
+        if usuario[3] in (1, 2, 3) and usuario[4] is not None:
             mesas = conn.execute(
                 "SELECT id, nome FROM mesas WHERE setor_id = ? AND ativa = 1 ORDER BY nome",
                 (usuario[4],)

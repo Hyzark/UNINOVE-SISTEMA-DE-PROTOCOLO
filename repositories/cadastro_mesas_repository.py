@@ -25,6 +25,7 @@ def create_cadastro_mesa(cadastro, setor_id):
                        (cadastro, setor_id))
         conn.commit()
         print("Mesa criada com sucesso!")
+        return cursor.lastrowid
     except sqlite3.IntegrityError:
         conn.rollback()
         print("Erro ao criar a Mesa!")
@@ -32,5 +33,3 @@ def create_cadastro_mesa(cadastro, setor_id):
         
     finally:
         conn.close()
-
-        

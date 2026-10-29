@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar · Gerenciamento de Processos</title>
+    <link rel="stylesheet" href="/protocolo/styles/main.css">
+    <script>
+      try {
+        const settings = JSON.parse(localStorage.getItem("pd-settings"));
+        if (settings?.theme) {
+          document.documentElement.dataset.theme = settings.theme;
+        }
+      } catch (error) {
+        // Preferências inválidas não impedem a tela de login de abrir.
+      }
+    </script>
+  </head>
+  <body class="login-page">
+    <main class="login-shell">
+      <section class="panel login-panel" aria-labelledby="login-title">
+        <div class="section-heading login-heading">
+          <div>
+            <p class="eyebrow">GERENCIAMENTO DE PROCESSOS</p>
+            <h1 id="login-title">Entrar no sistema</h1>
+            <p>Acesse sua conta para continuar.</p>
+          </div>
+        </div>
+
+        <form id="login-form" class="login-form">
+          <p id="login-message" class="login-message" role="alert" hidden></p>
+          <label class="form-field">
+            E-mail
+            <input name="email" type="email" autocomplete="username" required>
+          </label>
+          <label class="form-field">
+            Senha
+            <input name="senha" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-button" type="submit">Entrar</button>
+        </form>
+      </section>
+    </main>
+    <script type="module" src="/protocolo/js/login.js"></script>
+  </body>
+</html>

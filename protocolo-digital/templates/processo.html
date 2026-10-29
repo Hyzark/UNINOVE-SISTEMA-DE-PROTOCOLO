@@ -1,0 +1,20 @@
+<nav class="process-actions" aria-label="Ações do processo">
+  <button type="button" class="action-btn" data-action="novo-documento"><span class="glyph">＋</span>Novo documento</button>
+  <button type="button" class="action-btn" data-action="anexar"><span class="glyph">↥</span>Anexar arquivo</button>
+  <button type="button" class="action-btn" data-action="consultar"><span class="glyph">▤</span>Dados do processo</button>
+  <button type="button" class="action-btn" data-action="status"><span class="glyph">●</span>Status</button>
+  <button type="button" class="action-btn" data-action="andamento"><span class="glyph">◷</span>Andamento</button>
+</nav>
+<div class="process-view">
+  <aside class="panel process-tree" aria-label="Documentos do processo"><div class="tree-head"><h3 id="tree-number"></h3><span id="tree-status" class="status-badge"></span></div><ul class="tree-docs" id="doc-list"></ul></aside>
+  <section class="panel process-content" id="process-content" aria-live="polite"></section>
+</div>
+<form id="upload-form" class="panel upload-panel" hidden><label class="form-field">Título do anexo<input type="text" name="titulo" maxlength="200" required placeholder="Título que aparecerá no processo"></label><label class="form-field">Arquivo<input type="file" name="arquivo" required></label><p class="help">PDF, planilhas, imagens, ZIP e outros arquivos (máximo 20 MB).</p><div class="form-actions"><button type="button" class="secondary-button" data-cancel-upload>Cancelar</button><button class="primary-button" type="submit">Enviar arquivo</button></div></form>
+<form id="edit-attachment-form" class="panel upload-panel" hidden><label class="form-field">Título do anexo<input type="text" name="titulo" maxlength="200" required></label><label class="form-field">Substituir arquivo (opcional)<input type="file" name="arquivo"></label><p class="help">Se não escolher outro arquivo, será salvo apenas o novo título.</p><div class="form-actions"><button type="button" class="secondary-button" data-cancel-edit-attachment>Cancelar</button><button class="primary-button" type="submit">Salvar alterações</button></div></form>
+<section id="editor-panel" class="panel editor-panel" hidden><div class="section-heading"><div><h3 id="editor-heading">Novo documento</h3></div></div>
+  <label class="form-field">Título do documento<input id="editor-name" maxlength="200" required></label>
+  <div class="editor-toolbar" role="toolbar" aria-label="Formatação do documento"><button type="button" data-cmd="bold"><strong>B</strong></button><button type="button" data-cmd="italic"><em>I</em></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="formatBlock" data-value="h2">Título</button><button type="button" data-cmd="formatBlock" data-value="p">Parágrafo</button><button type="button" data-cmd="insertUnorderedList">Lista</button><button type="button" data-cmd="insertOrderedList">Lista numerada</button><button type="button" id="insert-image">Inserir imagem</button><input id="image-file" type="file" accept=".png,.jpg,.jpeg,.gif,.webp,image/png,image/jpeg,image/gif,image/webp" hidden></div>
+  <p id="image-status" class="help">Nenhuma imagem inserida.</p>
+  <div id="editor-body" class="editor-canvas" contenteditable="true" aria-label="Conteúdo do documento"></div>
+  <div class="form-actions"><button type="button" class="secondary-button" id="cancel-editor">Cancelar</button><button type="button" class="primary-button" id="save-editor">Salvar documento e PDF</button></div>
+</section>

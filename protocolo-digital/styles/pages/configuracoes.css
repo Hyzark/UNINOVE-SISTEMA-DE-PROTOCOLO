@@ -1,0 +1,8 @@
+/* Tela: Configurações */
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.setting-row strong{display:block;font-size:calc(12px * var(--fs));margin-bottom:4px}
+.setting-row p{margin:0;font-size:calc(11px * var(--fs));color:var(--muted)}
+.segmented{display:inline-flex;border:1px solid #e1e6ef;border-radius:9px;overflow:hidden}
+.segmented button{border:0;background:#fff;color:#66738a;padding:9px 15px;font-size:calc(11px * var(--fs));font-weight:600}
+.segmented button+button{border-left:1px solid #e1e6ef}
+.segmented button.active{background:#218c69;color:#fff}

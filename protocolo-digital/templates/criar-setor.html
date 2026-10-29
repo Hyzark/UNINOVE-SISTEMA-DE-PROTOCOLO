@@ -1,0 +1,9 @@
+<section class="panel content-panel">
+  <div class="section-heading"><div><h3>Dados do setor</h3><p>Cadastre um setor para vinculá-lo aos funcionários e gerentes.</p></div><button type="button" class="secondary-button" id="consult-sector-history" aria-expanded="false">Consultar histórico</button></div>
+  <form id="sector-form" class="form-grid admin-form">
+    <label class="form-field full">Nome do setor *<input name="nome" maxlength="200" required></label>
+    <label class="form-field full">Descrição<textarea name="descricao" maxlength="2000" rows="4"></textarea></label>
+    <div class="form-actions form-field full"><button type="button" class="secondary-button" id="cancel-sector">Cancelar</button><button type="submit" class="primary-button">Criar setor</button></div>
+  </form>
+</section>
+<section id="sector-history" class="panel admin-history" hidden></section>

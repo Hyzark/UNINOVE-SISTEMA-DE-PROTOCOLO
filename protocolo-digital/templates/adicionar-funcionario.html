@@ -1,0 +1,13 @@
+<section class="panel content-panel">
+  <div class="section-heading"><div><h3>Dados do funcionário</h3><p>Cadastre um funcionário ou gerente e vincule-o a um setor.</p></div><button type="button" class="secondary-button" id="consult-employee-history" aria-expanded="false">Consultar histórico</button></div>
+  <form id="employee-form" class="form-grid admin-form">
+    <label class="form-field">Nome completo *<input name="nome" maxlength="200" autocomplete="name" required></label>
+    <label class="form-field">Cargo *<input name="cargo" maxlength="150" required></label>
+    <label class="form-field">E-mail corporativo *<input name="email" type="email" autocomplete="email" pattern="[^@\s]+@empresa\.sp\.gov\.br$" title="Use um e-mail @empresa.sp.gov.br" required></label>
+    <label class="form-field">Setor *<select name="setor_id" required><option value="">Carregando setores...</option></select></label>
+    <label class="form-field">Nível de acesso *<select name="nivel_acesso" required><option value="">Selecione</option><option value="1">Funcionário</option><option value="3">Gerente</option></select></label>
+    <label class="form-field">Senha *<input name="senha" type="password" autocomplete="new-password" required></label>
+    <div class="form-actions form-field full"><button type="button" class="secondary-button" id="cancel-employee">Cancelar</button><button type="submit" class="primary-button">Adicionar funcionário</button></div>
+  </form>
+</section>
+<section id="employee-history" class="panel admin-history" hidden></section>

@@ -1,0 +1,9 @@
+/* Base: variáveis, reset e tipografia */
+:root{--fs:1;--bg:#f5f7fb;--surface:#fff;--text:#172033;--muted:#7d8799;--line:#e8ecf3;--blue:#218c69;--blue-soft:#e5f7ef;--green:#1b9a72;--orange:#d88a22;--purple:#8662d9;--red:#dc5555;--shadow:0 5px 22px rgba(28,42,74,.045)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',Arial,sans-serif;font-size:calc(14px * var(--fs))}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+h1,h2,h3,p{margin-top:0}
+h1{font:800 calc(26px * var(--fs)) Manrope,sans-serif;letter-spacing:-.8px;margin:0 0 6px}
+:focus-visible{outline:2px solid #218c69;outline-offset:2px}

@@ -1,121 +1,97 @@
-# Como executar o projeto
+# Gerenciamento de Processos
 
-## Sistema de Protocolo
+Aplicação web para cadastro e acompanhamento de processos, construída com FastAPI e SQLite. A interface autenticada é servida em <code>/sistema</code> e suas telas, scripts e estilos ficam em <code>protocolo-digital/</code>.
 
-Aplicação web acadêmica para cadastro e acompanhamento de processos, construída com FastAPI e SQLite.
+## Telas e funcionalidades
 
-## Funcionalidades implementadas
+### Acesso
 
-### Acesso e usuários
+- A tela de login fica em <code>/</code> e usa e-mail e senha cadastrados.
+- O cadastro de funcionários e gerentes exige e-mail <code>@empresa.sp.gov.br</code>. O cadastro inicial do administrador exige e-mail <code>@admin.sp.gov.br</code>.
+- O logout encerra a sessão. Ao abrir a página de login, sessões antigas são descartadas; a reinicialização do servidor também invalida sessões anteriores.
+- Os perfis são funcionário (<code>1</code>), administrador (<code>2</code>) e gerente (<code>3</code>).
 
-- Login com e-mail e senha, sessão autenticada e logout.
-- Níveis de acesso: funcionário (`1`), administrador (`2`) e gerente (`3`).
-- O administrador pode cadastrar funcionários ou gerentes, vinculando-os a um setor.
-- E-mails cadastrados para funcionários e gerentes devem usar `@empresa.sp.gov.br`.
-- O painel administrativo permite cadastrar setores.
+### Processos
 
-### Setores, mesas e processos
+- **Processos:** mostra indicadores calculados com as datas do banco, os processos da mesa selecionada e filtros por assunto, número e situação. Clicar em “Processos” atualiza os dados da mesa no servidor.
+- A busca do cabeçalho consulta processos por número ou assunto em todo o setor; a lista principal continua limitada à mesa escolhida.
+- **Iniciar Processo:** cria processos com assunto e descrição. O número é gerado no formato <code>PROC-000001</code>.
+- O seletor de mesa permite trocar de mesa e escolher “+ Criar mesa”. As mesas pertencem ao setor associado à conta.
+- A tela de um processo mostra dados, documentos, status e andamento. O status pode ser alterado entre **Em análise** (roxo), **Em andamento** (azul) e **Aguardando solicitação** (cinza), com registro no histórico.
+- Funcionários, gerentes e administradores acessam somente os processos do setor associado à conta.
 
-- Funcionários e gerentes veem as mesas ativas do próprio setor.
-- Ao entrar em uma mesa, podem criar processos com assunto e descrição.
-- O número do processo é gerado pelo sistema no formato `PROC-000001`.
-- A lista da mesa exibe seus processos; ao abrir um processo, a tela mostra dados, situação, setor, mesa, autor e datas.
-- O acesso a mesas e processos é validado no servidor por setor.
+### Documentos e anexos
 
-### Arquivos e documentos
+- O processo aceita anexos de até 20 MB. Antes de enviar um arquivo, é obrigatório informar o título que será exibido no processo.
+- Clicar em um documento abre a prévia. O download acontece pelo botão “Baixar”.
+- Anexos enviados podem ter o título alterado ou o arquivo substituído.
+- A prévia exibe PDF e imagens no navegador; planilhas <code>.xlsx</code>/<code>.xlsm</code>, <code>.ods</code> e <code>.csv</code>; texto de <code>.docx</code> e <code>.pptx</code>; arquivos <code>.txt</code>, <code>.log</code>, <code>.json</code>, <code>.xml</code> e <code>.md</code>; e a lista de conteúdo de arquivos ZIP. Algumas prévias são limitadas para manter a tela responsiva. Outros formatos podem ser baixados para abertura no aplicativo apropriado.
+- **Novo documento** abre o editor de texto formatado, com títulos, parágrafos, listas e imagens. O conteúdo fica salvo para edição posterior e cada salvamento gera ou atualiza o PDF anexado ao processo.
 
-- É possível anexar arquivos a um processo. O limite atual é 20 MB por arquivo.
-- O anexo pode ser baixado por usuários autorizados do setor do processo.
-- A tela de processo mantém uma lista de arquivos, incluindo PDFs gerados pelo editor.
-- O editor de documentos permite texto formatado, títulos, listas e imagens PNG, JPG/JPEG, GIF e WebP.
-- Imagens de até 20 MB são redimensionadas no navegador antes de serem inseridas.
-- O conteúdo editável é salvo para reabertura. Cada salvamento gera ou substitui o PDF associado ao documento.
+### Andamento e auditoria
 
-### Histórico
+- O andamento do processo mostra data e hora, usuário, ação e descrição de eventos registrados, como criação do processo, alteração de status, anexos e documentos editoriais.
+- Os registros identificam o usuário responsável. Alterações de status também incluem o nome de quem as fez na descrição.
+- As telas administrativas de **Criar setor** e **Adicionar funcionário** têm “Consultar histórico”, que mostra o administrador, a data, a ação e os detalhes do cadastro. Esses registros passam a existir a partir da implantação da auditoria; cadastros anteriores não têm autor registrado para consulta retroativa.
 
-- O processo exibe eventos de criação, anexação de arquivos, criação e atualização de documentos editáveis e tramitações que estejam registradas no banco.
-- Os eventos mostram usuário, data e hora; a interface formata as datas para o fuso de São Paulo.
+### Administração
 
-## Endpoints principais
+- O administrador usa o mesmo painel e as telas comuns de processos. O menu lateral também oferece **Criar setor** e **Adicionar funcionário**.
+- **Criar setor** cadastra um setor e registra no histórico o administrador que o criou.
+- **Adicionar funcionário** cadastra funcionário ou gerente, com e-mail, senha, cargo e setor, e registra o administrador responsável.
+- Funcionários, gerentes e administradores podem criar mesas para o setor associado à conta.
+- Perfil, tema claro/escuro e tamanho da fonte ficam disponíveis pelos controles compartilhados. O tema escuro usa fundo preto e acentos verdes.
 
-| Endpoint | Uso |
+## Dados e configuração inicial
+
+Execute os comandos a partir da pasta raiz do projeto.
+
+1. Crie e ative o ambiente virtual e instale as dependências:
+
+       python -m venv venv
+       venv\Scripts\activate
+       pip install -r requirements.txt
+
+2. Crie as tabelas, se necessário, e cadastre o primeiro setor e administrador com dados próprios:
+
+       python repository.py
+       python repositories/add_admin.py
+
+   O cadastro inicial pede os dados no terminal e não usa credenciais de exemplo.
+
+3. Inicie o servidor:
+
+       uvicorn main:app --reload
+
+   Sistema: <code>http://127.0.0.1:8000</code>. Documentação da API: <code>http://127.0.0.1:8000/docs</code>.
+
+- O banco SQLite utilizado é <code>banco.db</code>. <code>repository.py</code> cria as tabelas; ele não cria dados de exemplo.
+- <code>repository2.py</code> apaga todos os registros do banco, inclusive usuários e administradores, reinicia os IDs e mantém as tabelas. Use-o somente para começar com uma base vazia. Ele não apaga arquivos armazenados em <code>uploads/documentos/</code> e <code>uploads/documentos_editoriais/</code>.
+- Os anexos e PDFs gerados ficam nessas pastas locais. Arquivos físicos sem registro no banco após uma limpeza precisam ser removidos manualmente, caso também se deseje apagá-los.
+- O sistema não cria processos, usuários, datas ou movimentações fictícias para preencher as telas.
+
+## Rotas principais
+
+| Rota | Uso |
 | --- | --- |
-| `POST /login`, `GET /sessao`, `POST /logout` | Autenticação e sessão |
-| `POST /cadastrarfuncionario` | Cadastro administrativo de funcionário ou gerente |
-| `GET /setores`, `POST /cadastrarsetor` | Listar e cadastrar setores |
-| `POST /cadastrarMesa` | Cadastrar uma mesa para o setor do funcionário autenticado |
-| `GET /minhas-mesas`, `POST /mesa-atual` | Listar e selecionar mesa |
-| `GET /mesas/{mesa_id}/processos`, `POST /processos` | Listar processos da mesa e criar processo |
-| `GET /processos/{processo_id}` | Consultar detalhes, anexos e histórico |
-| `POST /processos/{processo_id}/documentos` | Anexar arquivo |
-| `GET /documentos/{documento_id}/download` | Baixar arquivo autorizado |
-| `POST /processos/{processo_id}/documentos-editoriais` | Criar documento editável e PDF |
-| `GET /documentos-editoriais/{documento_id}`, `PUT /documentos-editoriais/{documento_id}` | Reabrir e atualizar documento editável |
+| <code>GET /</code>, <code>GET /sistema</code> | Login e interface autenticada |
+| <code>POST /login</code>, <code>GET /sessao</code>, <code>POST /logout</code> | Autenticação e sessão |
+| <code>GET /minhas-mesas</code>, <code>POST /mesa-atual</code>, <code>POST /cadastrarMesa</code> | Listar, selecionar e criar mesas |
+| <code>GET /mesas/{mesa_id}/processos</code>, <code>POST /processos</code> | Listar processos da mesa e criar processo |
+| <code>GET /processos/busca?termo=...</code>, <code>GET /processos/{processo_id}</code> | Buscar no setor e consultar processo |
+| <code>PATCH /processos/{processo_id}/situacao</code> | Alterar status do processo |
+| <code>POST /processos/{processo_id}/documentos</code>, <code>GET /documentos/{documento_id}/preview</code>, <code>GET /documentos/{documento_id}/download</code>, <code>PUT /documentos/{documento_id}</code> | Anexar, pré-visualizar, baixar e editar anexos |
+| <code>POST /processos/{processo_id}/documentos-editoriais</code>, <code>GET /documentos-editoriais/{documento_id}</code>, <code>PUT /documentos-editoriais/{documento_id}</code> | Criar, consultar e atualizar documentos editáveis e seus PDFs |
+| <code>GET /setores</code>, <code>POST /cadastrarsetor</code>, <code>GET /setores/historico</code> | Listar, criar e auditar setores |
+| <code>POST /cadastrarfuncionario</code>, <code>GET /usuarios/historico</code> | Criar funcionário/gerente e consultar auditoria |
 
-## Ainda não implementado
+## Ainda não disponíveis na interface
 
-As tabelas de algumas destas funcionalidades já aparecem no esquema do banco, mas ainda não há fluxo completo de tela, rota e serviço para elas:
-
-- Tramitar processo entre mesas e setores.
-- Buscar processos por número, assunto, setor, responsável, situação ou datas.
-- Alterar a situação do processo pela interface.
-- Criar comentários e anotações públicas ou privadas.
-- Criar e aplicar marcadores.
-- Sobrestamento, controle de disponibilidade por setor, processos relacionados e solicitações de alteração ou exclusão.
-- Assinaturas e workflows de aprovação.
-- PDF consolidado com todo o processo e seus eventos.
-- Recursos de inteligência artificial descritos na documentação funcional.
-
-## Dados e arquivos
-
-- O banco utilizado pela aplicação é `banco.db`, relativo ao diretório de execução.
-- `repository.py` contém a criação das tabelas principais. Em uma base nova, execute `python repository.py` uma vez antes de iniciar a aplicação.
-- Anexos e PDFs são armazenados localmente em `uploads/documentos/` e `uploads/documentos_editoriais/`.
-- Para o primeiro acesso administrativo, a base precisa ter um usuário nível `2` e um setor ativo. O sistema ainda não tem uma tela pública para criar o primeiro administrador.
-
-### 1. Criar a VENV
-```bash
-python -m venv venv
-```
-
-A `venv` cria um ambiente virtual separado para as dependências do projeto.
-
-### 2. Ativar a VENV
-
-**Windows:**
-```bash
-venv\Scripts\activate
-```
-
-Quando estiver ativada, aparecerá `(venv)` no início do terminal.
-
-### 3. Instalar as dependências
-```bash
-pip install -r requirements.txt
-```
-
-Instala todas as bibliotecas necessárias para executar o projeto.
-
-### 4. Executar o projeto
-```bash
-uvicorn main:app --reload
-```
-
-Inicia o servidor FastAPI.
-
-### 5. Acessar
-
-Projeto:
-```text
-http://127.0.0.1:8000
-```
-
-Documentação da API:
-```text
-http://127.0.0.1:8000/docs
-```
-
----
+- Tramitação de processos entre mesas ou setores.
+- Comentários e anotações públicas ou privadas.
+- Marcadores, sobrestamento, disponibilidade por setor e processos relacionados.
+- Solicitações de alteração/exclusão, assinaturas e fluxos de aprovação.
+- PDF consolidado do processo e recursos de inteligência artificial.
 
 # Git
 

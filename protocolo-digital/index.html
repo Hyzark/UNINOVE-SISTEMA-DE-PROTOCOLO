@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Processos</title>
+  <link rel="stylesheet" href="/protocolo/styles/main.css">
+  <script>try{var s=JSON.parse(localStorage.getItem("pd-settings"));if(s&&s.theme)document.documentElement.dataset.theme=s.theme}catch(e){}</script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>Gerenciamento de Processos</h2>
+      </div>
+      <nav aria-label="Menu principal">
+        <a href="#" class="menu-item" data-page="inicio"><span>▤</span> Processos</a>
+        <a href="#" class="menu-item" data-page="iniciar-processo"><span>＋</span> Iniciar Processo</a>
+        <a href="#" class="menu-item" data-page="criar-setor" data-admin-only hidden><span>＋</span> Criar setor</a>
+        <a href="#" class="menu-item" data-page="adicionar-funcionario" data-admin-only hidden><span>＋</span> Adicionar funcionário</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="header">
+        <div class="header-left">
+          <form class="global-search" id="search-form" role="search"><span>⌕</span><input id="global-search" type="search" placeholder="Pesquisar processos do setor..." aria-label="Pesquisar processos do setor"></form>
+        </div>
+        <div class="header-right">
+          <label class="mesa-picker"><span>Mesa</span><select id="mesa-select" aria-label="Selecionar mesa"></select></label>
+          <button class="icon-button" id="settings-button" type="button" aria-label="Configurações" title="Configurações">&#9881;&#xFE0E;</button>
+          <button class="icon-button" id="logout-button" type="button" aria-label="Sair" title="Sair">↪</button>
+          <button class="user" id="profile-button" type="button" aria-label="Abrir perfil" title="Perfil">
+            <span class="avatar" id="user-avatar">—</span>
+            <div><strong id="user-name">Carregando...</strong><p id="user-sector"></p></div>
+          </button>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div><p class="eyebrow">PAINEL DE CONTROLE</p><h1 id="page-title">Início</h1><p class="page-subtitle" id="page-subtitle">Visão geral dos processos da mesa atual.</p></div>
+          <div class="date-chip" id="today-date"></div>
+        </header>
+        <section id="page-content" aria-live="polite">
+          <div class="empty-state" id="loading-state">Carregando...</div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    // O sistema carrega as telas da pasta templates/, então precisa rodar em um servidor local.
+    if (location.protocol === "file:") document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("loading-state").innerHTML = "Abra o sistema por um servidor local (veja o README.md).<br>Exemplo: <strong>python -m http.server 8000</strong> e acesse http://localhost:8000";
+    });
+  </script>
+  <script type="module" src="/protocolo/js/main.js"></script>
+</body>
+</html>

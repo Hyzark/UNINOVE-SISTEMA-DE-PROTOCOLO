@@ -1,0 +1,12 @@
+<section class="dashboard-cards" aria-label="Resumo da mesa">
+  <article class="stat-card"><div class="card-top"><span class="card-icon blue">▤</span><span class="card-trend">Mesa atual</span></div><p>Total de processos</p><h2 data-stat="total">0</h2><span class="card-note">Registros no banco</span></article>
+  <article class="stat-card"><div class="card-top"><span class="card-icon green">＋</span><span class="card-trend">Últimos 7 dias</span></div><p>Processos criados</p><h2 data-stat="recentes">0</h2><span class="card-note">Conforme data de criação</span></article>
+  <article class="stat-card"><div class="card-top"><span class="card-icon orange">◷</span><span class="card-trend">Acompanhar</span></div><p>Sem atualização há mais de 15 dias</p><h2 data-stat="parados">0</h2><span class="card-note">Conforme última atualização</span></article>
+</section>
+<div class="page-toolbar"><div class="toolbar-filters">
+  <input class="search-control" id="process-search" type="search" placeholder="Buscar por número ou assunto..." aria-label="Buscar processo">
+  <select class="field-control" id="status-filter" aria-label="Filtrar por situação"><option value="">Todas as situações</option></select>
+</div></div>
+<section class="panel attention-section"><div class="section-heading"><div><h3>Processos da mesa</h3><p id="process-count"></p></div></div>
+  <div class="table-container"><table class="process-table"><thead><tr><th>Nº do processo</th><th>Assunto</th><th>Última atualização</th><th>Situação</th></tr></thead><tbody id="process-table-body"></tbody></table></div>
+</section>
