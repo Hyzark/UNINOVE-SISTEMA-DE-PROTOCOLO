@@ -52,6 +52,49 @@ export async function init(root, ctx, params = {}) {
     content.innerHTML = `<div class="viewer-head"><div><h3>Andamento do processo</h3><p>${events.length} registros</p></div></div>${events.length ? `<div class="table-container"><table class="process-table"><thead><tr><th>Data/Hora</th><th>Usuário</th><th>Ação</th><th>Descrição</th></tr></thead><tbody>${events.map(e => `<tr><td>${escapeHtml(formatDate(e.criado_em))}</td><td>${escapeHtml(e.usuario)}</td><td>${escapeHtml(e.acao)}</td><td>${escapeHtml(e.descricao || "")}</td></tr>`).join("")}</tbody></table></div>` : '<div class="empty-state">Nenhum evento registrado.</div>'}`;
   }
 
+  async function showTransferForm() {
+    upload.hidden = true;
+    attachmentEditor.hidden = true;
+    editor.hidden = true;
+    content.innerHTML = '<div class="empty-state">Carregando mesas disponíveis...</div>';
+
+    try {
+      const mesas = await api(`/processos/${processId}/mesas-destino`);
+
+      if (!Array.isArray(mesas) || mesas.length === 0) {
+        content.innerHTML = '<div class="viewer-head"><div><h3>Tramitar processo</h3></div></div><div class="empty-state">Não há outras mesas ativas disponíveis para receber este processo.</div><div class="form-actions"><button type="button" class="secondary-button" data-cancel-transfer>Voltar</button></div>';
+        return;
+      }
+
+      const options = mesas.map(m =>
+        `<option value="${Number(m.id)}">${escapeHtml(m.setor)} — ${escapeHtml(m.nome)}</option>`
+      ).join("");
+
+      content.innerHTML = `
+        <div class="viewer-head">
+          <div><h3>Tramitar processo</h3><p>Encaminhe o processo para outra mesa ou setor.</p></div>
+        </div>
+        <form id="process-transfer-form" class="status-editor">
+          <p><strong>Origem:</strong> ${escapeHtml(p.setor || "—")} — ${escapeHtml(p.mesa || "—")}</p>
+          <label class="form-field" for="transfer-destination">Mesa de destino
+            <select class="field-control" id="transfer-destination" name="mesa_destino_id" required>
+              <option value="">Selecione a mesa de destino</option>
+              ${options}
+            </select>
+          </label>
+          <label class="form-field" for="transfer-observation">Observação
+            <textarea class="field-control" id="transfer-observation" name="observacao" rows="4" maxlength="1000" placeholder="Informe o motivo ou as orientações para o setor de destino."></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="button" class="secondary-button" data-cancel-transfer>Cancelar</button>
+            <button class="primary-button" type="submit">Confirmar tramitação</button>
+          </div>
+        </form>`;
+    } catch (error) {
+      content.innerHTML = `<div class="empty-state">${escapeHtml(error.message)}</div><div class="form-actions"><button type="button" class="secondary-button" data-cancel-transfer>Voltar</button></div>`;
+    }
+  }
+
   async function openFile(id) {
     upload.hidden = true; attachmentEditor.hidden = true; editor.hidden = true;
     const doc = p.documentos.find(d => d.id === Number(id));
@@ -133,20 +176,54 @@ export async function init(root, ctx, params = {}) {
     if (editEditorial) editDocument(editEditorial.dataset.editEditorial);
   });
   content.addEventListener("submit", async event => {
-    if (event.target.id !== "process-status-form") return;
+    if (event.target.id === "process-status-form") {
+      event.preventDefault();
+      const situacao = new FormData(event.target).get("situacao");
+      try {
+        await api(`/processos/${processId}/situacao`, jsonOptions("PATCH", { situacao }));
+        showToast("Status do processo atualizado.");
+        ctx.navigate("processo", { id: processId });
+      } catch (error) { showToast(error.message); }
+      return;
+    }
+
+    if (event.target.id !== "process-transfer-form") return;
     event.preventDefault();
-    const situacao = new FormData(event.target).get("situacao");
+
+    const form = event.target;
+    const data = new FormData(form);
+    const mesa_destino_id = Number(data.get("mesa_destino_id"));
+    const observacao = String(data.get("observacao") || "").trim();
+    const submit = form.querySelector('[type="submit"]');
+
+    if (!mesa_destino_id) {
+      showToast("Selecione uma mesa de destino.");
+      return;
+    }
+
+    submit.disabled = true;
     try {
-      await api(`/processos/${processId}/situacao`, jsonOptions("PATCH", { situacao }));
-      showToast("Status do processo atualizado.");
-      ctx.navigate("processo", { id: processId });
-    } catch (error) { showToast(error.message); }
+      const result = await api(
+        `/processos/${processId}/tramitar`,
+        jsonOptions("POST", { mesa_destino_id, observacao })
+      );
+      showToast(result.mensagem || "Processo tramitado com sucesso.");
+      ctx.navigate("inicio");
+    } catch (error) {
+      showToast(error.message);
+      submit.disabled = false;
+    }
+  });
+
+  content.addEventListener("click", event => {
+    if (event.target.closest("[data-cancel-transfer]")) showDetails();
   });
   root.querySelector(".process-actions").addEventListener("click", event => {
     const action = event.target.closest("[data-action]")?.dataset.action;
     if (action === "consultar") showDetails();
     if (action === "status") showStatusEditor();
     if (action === "andamento") showHistory();
+    if (action === "tramitar") showTransferForm();
     if (action === "anexar") { editor.hidden = true; attachmentEditor.hidden = true; upload.hidden = !upload.hidden; if (!upload.hidden) upload.elements.titulo.focus(); }
     if (action === "novo-documento") {
       editorialId = null;

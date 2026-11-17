@@ -26,6 +26,7 @@ from repositories.processos_repository import (
     obter_documento_editorial,
 )
 from repositories.processos_repository import atualizar_situacao_processo
+from repositories.tramitacao_repository import listar_mesas_destino, tramitar_processo
 from services.security.auth_services import get_current_user
 
 router = APIRouter()
@@ -49,6 +50,12 @@ def require_operador(request: Request):
 
 class SelecaoMesa(BaseModel):
     mesa_id: int = Field(gt=0)
+
+
+class SolicitacaoTramitacao(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    mesa_destino_id: int = Field(gt=0)
+    observacao: str = Field(default="", max_length=1000)
 
 
 class AtualizacaoSituacao(BaseModel):
@@ -140,6 +147,38 @@ def detalhes_processo(processo_id: int, user_id: int = Depends(require_operador)
                         "criado_em": d[4], "enviado_por": d[5]} for d in documentos],
         "documentos_editoriais": [{"id": d[0], "nome": d[1], "criado_em": d[2],
                                    "atualizado_em": d[3], "pdf_documento_id": d[4]} for d in documentos_editoriais]
+    }
+
+
+@router.get("/processos/{processo_id}/mesas-destino")
+def mesas_destino_processo(processo_id: int, user_id: int = Depends(require_operador)):
+    mesas = listar_mesas_destino(processo_id, user_id)
+    if mesas is None:
+        raise HTTPException(status_code=404, detail="Processo não encontrado no seu setor.")
+    return mesas
+
+
+@router.post("/processos/{processo_id}/tramitar")
+def tramitar_processo_route(
+    processo_id: int,
+    solicitacao: SolicitacaoTramitacao,
+    user_id: int = Depends(require_operador)
+):
+    try:
+        resultado = tramitar_processo(
+            processo_id,
+            user_id,
+            solicitacao.mesa_destino_id,
+            solicitacao.observacao
+        )
+    except ValueError as exc:
+        mensagem = str(exc)
+        status = 404 if "não encontrado" in mensagem.lower() or "permissão" in mensagem.lower() else 400
+        raise HTTPException(status_code=status, detail=mensagem) from exc
+
+    return {
+        "mensagem": "Processo tramitado com sucesso.",
+        **resultado
     }
 
 
